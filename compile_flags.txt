@@ -1,0 +1,3 @@
+-xc
+-I
+/home/lucas/labs/xv6-labs-2020/
