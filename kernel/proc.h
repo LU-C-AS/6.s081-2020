@@ -1,3 +1,9 @@
+#pragma once
+#include "param.h"
+#include "riscv.h"
+#include "spinlock.h"
+#include "types.h"
+
 // Saved registers for kernel context switches.
 struct context {
   uint64 ra;
@@ -20,10 +26,10 @@ struct context {
 
 // Per-CPU state.
 struct cpu {
-  struct proc *proc;          // The process running on this cpu, or null.
-  struct context context;     // swtch() here to enter scheduler().
-  int noff;                   // Depth of push_off() nesting.
-  int intena;                 // Were interrupts enabled before push_off()?
+  struct proc *proc;      // The process running on this cpu, or null.
+  struct context context; // swtch() here to enter scheduler().
+  int noff;               // Depth of push_off() nesting.
+  int intena;             // Were interrupts enabled before push_off()?
 };
 
 extern struct cpu cpus[NCPU];
@@ -87,12 +93,12 @@ struct proc {
   struct spinlock lock;
 
   // p->lock must be held when using these:
-  enum procstate state;        // Process state
-  struct proc *parent;         // Parent process
-  void *chan;                  // If non-zero, sleeping on chan
-  int killed;                  // If non-zero, have been killed
-  int xstate;                  // Exit status to be returned to parent's wait
-  int pid;                     // Process ID
+  enum procstate state; // Process state
+  struct proc *parent;  // Parent process
+  void *chan;           // If non-zero, sleeping on chan
+  int killed;           // If non-zero, have been killed
+  int xstate;           // Exit status to be returned to parent's wait
+  int pid;              // Process ID
 
   // these are private to the process, so p->lock need not be held.
   uint64 kstack;               // Virtual address of kernel stack
@@ -103,4 +109,24 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  int interval;
+  void (*handler)();
+  int pass_ticks;
+  int inlarm;
+  struct trapframe *alarmframe;
+  // uint64 _ra;
+  // uint64 _sp;
+  // uint64 _s0;
+  // uint64 _s1;
+  // uint64 _s2;
+  // uint64 _s3;
+  // uint64 _s4;
+  // uint64 _s5;
+  // uint64 _s6;
+  // uint64 _s7;
+  // uint64 _s8;
+  // uint64 _s9;
+  // uint64 _s10;
+  // uint64 _s11;
 };
