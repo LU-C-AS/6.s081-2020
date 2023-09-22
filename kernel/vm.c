@@ -114,6 +114,7 @@ uint64 walkaddr(pagetable_t pagetable, uint64 va) {
   // printf("walkaddr\n");
   pte = walk(pagetable, va, 0);
   if (pte == 0 || (*pte & PTE_V) == 0) {
+    // 必须要加>=和PGROUNDUP才能过
     if (va >= myproc()->sz || va < PGROUNDUP(myproc()->trapframe->sp))
       return 0;
     char *mem;
