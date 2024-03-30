@@ -118,8 +118,8 @@ int exec(char *path, char **argv) {
   if (copypage(p->pagetable, p->kpagetable, 0, p->sz) < 0) {
     goto bad;
   }
-  w_satp(MAKE_SATP(p->kpagetable));
-  sfence_vma();
+  // w_satp(MAKE_SATP(p->kpagetable));
+  // sfence_vma();
 
   // printf("exec\n");
   if (p->pid == 1) {

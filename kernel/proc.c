@@ -272,8 +272,8 @@ int growproc(int n) {
   }
   p->sz = sz;
 
-  w_satp(MAKE_SATP(p->kpagetable));
-  sfence_vma();
+  // w_satp(MAKE_SATP(p->kpagetable));
+  // sfence_vma();
   return 0;
 }
 

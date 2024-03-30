@@ -236,6 +236,7 @@ int umappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa,
   return 0;
 }
 
+// 在kpagetable上添加pagetable的映射
 int copypage(pagetable_t pagetable, pagetable_t kpagetable, uint64 begin,
              uint64 end) {
   uint64 pa;
