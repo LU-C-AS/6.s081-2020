@@ -32,7 +32,7 @@ struct {
 
   uint time[NBUF];
   // uint ind;
-  uint32 bmap;
+  uint32 bmap; // 用位是否为1指示对应的cache block是否被使用
   // Linked list of all buffers, through prev/next.
   // Sorted by how recently the buffer was used.
   // head.next is most recent, head.prev is least.
